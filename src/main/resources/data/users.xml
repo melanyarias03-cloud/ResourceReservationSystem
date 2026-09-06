@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<users>
+                
+    
+    
+    
+    <user>
+                                
+        
+        
+        <id>208760123</id>
+                                
+        
+        
+        <password>caldosas11</password>
+                                
+        
+        
+        <role>EMPLOYEE</role>
+                            
+    
+    
+    </user>
+            
+    
+    <users>
+                        
+        
+        <user>
+                                    
+            
+            <id>admin</id>
+                                    
+            
+            <password>admin</password>
+                                    
+            
+            <role>ADMIN</role>
+                                
+        
+        </user>
+                    
+    
+    </users>
+        
+    
+
+</users>
