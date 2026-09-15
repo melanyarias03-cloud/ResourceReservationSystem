@@ -1,7 +1,7 @@
 package controller;
 
 import model.entity.User;
-
+import view.ReservationView;
 import view.ChangePasswordView;
 import view.EmployeeMenuView;
 import view.LoginView;
@@ -32,6 +32,10 @@ public class EmployeeMenuController {
         view.setLogoutAction(
                 e -> logout()
         );
+
+        view.setReservationsAction(
+                e -> openReservations()
+        );
     }
 
     private void openChangePassword() {
@@ -59,5 +63,20 @@ public class EmployeeMenuController {
         );
 
         loginView.setVisible(true);
+    }
+
+    private void openReservations() {
+
+        view.dispose();
+
+        ReservationView reservationView =
+                new ReservationView();
+
+        new ReservationController(
+                reservationView,
+                user
+        );
+
+        reservationView.setVisible(true);
     }
 }

@@ -154,6 +154,7 @@ public class AdminMenuView extends JFrame{
         return btnChangePassword;
     }
 
+
     public JButton getBtnLogout() {
         return btnLogout;
     }
@@ -169,12 +170,22 @@ public class AdminMenuView extends JFrame{
         btnLogout.addActionListener(action);
     }
 
-    public void setEmployeesAction(
+    public void setEmployeesAction(ActionListener action) {
+
+        btnEmployees.addActionListener(action);
+    }
+
+    public void setCategoriesAction(ActionListener action) {
+
+        btnCategories.addActionListener(action);
+    }
+
+
+    public void setResourcesAction(
             ActionListener action) {
 
-        btnEmployees.addActionListener(
+        btnResources.addActionListener(
                 action
         );
     }
-
 }

@@ -1,3 +1,30 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <reservations>
+            
+    
+    
+    
+    
+    <reservation>
+                
+        <id>RES-000002</id>
+                
+        <employeeId>208760123</employeeId>
+                
+        <activity>reunion</activity>
+                
+        <date>2026-03-03</date>
+                
+        <startTime>10:00</startTime>
+                
+        <endTime>12:00</endTime>
+                
+        <resources>
+                        
+            <resourceId>2541</resourceId>
+                    
+        </resources>
+            
+    </reservation>
+    
 </reservations>

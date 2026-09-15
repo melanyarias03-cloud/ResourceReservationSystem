@@ -11,6 +11,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.format.DateTimeParseException;
+import java.time.format.DateTimeFormatter;
 
 public class ReservationLogic {
 
@@ -41,9 +43,27 @@ public class ReservationLogic {
             );
         }
 
+
+
         if (startTime == null || endTime == null) {
             throw new InvalidDataException(
                     "The start and end times are required."
+            );
+        }
+
+
+        if (date.isBefore(LocalDate.now())) {
+
+            throw new InvalidDataException(
+                    "Reservations cannot be made for past dates."
+            );
+        }
+
+        if (date.equals(LocalDate.now())
+                && !startTime.isAfter(LocalTime.now())) {
+
+            throw new InvalidDataException(
+                    "The start time must be later than the current time."
             );
         }
 
@@ -53,12 +73,79 @@ public class ReservationLogic {
             );
         }
 
+
+
+
+
         if (categories == null || categories.isEmpty()) {
             throw new InvalidDataException(
                     "At least one resource category must be selected."
             );
         }
     }
+
+
+    public LocalDate parseDate(
+            String date)
+            throws EmptyFieldException,
+            InvalidDataException {
+
+        if (date == null ||
+                date.trim().isEmpty()) {
+
+            throw new EmptyFieldException(
+                    "The date cannot be empty."
+            );
+        }
+
+        try {
+
+            DateTimeFormatter formatter =
+                    DateTimeFormatter.ofPattern(
+                            "dd-MM-uuuu"
+                    );
+
+            return LocalDate.parse(
+                    date.trim(),
+                    formatter
+            );
+
+        } catch (DateTimeParseException e) {
+
+            throw new InvalidDataException(
+                    "The date format must be DD-MM-YYYY."
+            );
+        }
+    }
+    public LocalTime parseTime(
+            String time)
+            throws EmptyFieldException,
+            InvalidDataException {
+
+        if (time == null ||
+                time.trim().isEmpty()) {
+
+            throw new EmptyFieldException(
+                    "The time cannot be empty."
+            );
+        }
+
+        try {
+
+            return LocalTime.parse(
+                    time.trim()
+            );
+
+        } catch (DateTimeParseException e) {
+
+            throw new InvalidDataException(
+                    "The time format must be HH:mm."
+            );
+        }
+    }
+
+
+
     public boolean timeOverlaps(
             LocalTime start1,
             LocalTime end1,
@@ -139,6 +226,17 @@ public class ReservationLogic {
     }
 
 
+
+    public String generateId(int nextNumber) {
+
+        return String.format(
+                "RES-%06d",
+                nextNumber
+        );
+    }
+
+
+
     public Reservation createReservation(
             String id,
             Employee employee,
@@ -162,7 +260,11 @@ public class ReservationLogic {
                 categories
         );
 
-        List<Resource> assignedResources = new ArrayList<>();
+        List<Resource> assignedResources =
+                new ArrayList<>();
+
+        List<String> unavailableCategories =
+                new ArrayList<>();
 
         for (Category category : categories) {
 
@@ -177,13 +279,28 @@ public class ReservationLogic {
                     );
 
             if (availableResource == null) {
-                throw new ResourceNotAvailableException(
-                        "No resource available for category: "
-                                + category.getDescription()
+
+                unavailableCategories.add(
+                        category.getDescription()
+                );
+
+            } else {
+
+                assignedResources.add(
+                        availableResource
                 );
             }
+        }
 
-            assignedResources.add(availableResource);
+        if (!unavailableCategories.isEmpty()) {
+
+            throw new ResourceNotAvailableException(
+                    "No resources available for categories: "
+                            + String.join(
+                            ", ",
+                            unavailableCategories
+                    )
+            );
         }
 
         return new Reservation(
@@ -195,5 +312,83 @@ public class ReservationLogic {
                 endTime,
                 assignedResources
         );
+    }
+    public Reservation createReservation(
+            String id,
+            Employee employee,
+            String activity,
+            String date,
+            String startTime,
+            String endTime,
+            List<Category> categories,
+            List<Resource> resources,
+            List<Reservation> reservations)
+            throws EmptyFieldException,
+            InvalidDataException,
+            ResourceNotAvailableException {
+
+        LocalDate parsedDate =
+                parseDate(date);
+
+        LocalTime parsedStartTime =
+                parseTime(startTime);
+
+        LocalTime parsedEndTime =
+                parseTime(endTime);
+
+        return createReservation(
+                id,
+                employee,
+                activity,
+                parsedDate,
+                parsedStartTime,
+                parsedEndTime,
+                categories,
+                resources,
+                reservations
+        );
+    }
+
+    public void validateCancellation(
+            Reservation reservation)
+            throws InvalidDataException {
+
+        if (reservation == null) {
+            throw new InvalidDataException(
+                    "Reservation not found."
+            );
+        }
+
+        LocalDate today =
+                LocalDate.now();
+
+        LocalTime currentTime =
+                LocalTime.now();
+
+        if (reservation.getDate().isBefore(today)) {
+
+            throw new InvalidDataException(
+                    "Past reservations cannot be cancelled."
+            );
+        }
+
+        if (reservation.getDate().equals(today) && !reservation.getStartTime().isAfter(currentTime)) {
+
+            throw new InvalidDataException(
+                    "A reservation that has already started cannot be cancelled."
+            );
+        }
+    }
+    public void validateReservationSelection(
+            String reservationId)
+            throws InvalidDataException {
+
+        if (reservationId == null
+                || reservationId.trim().isEmpty()) {
+
+            throw new InvalidDataException(
+                    "Select a reservation first."
+            );
+        }
     }
 }

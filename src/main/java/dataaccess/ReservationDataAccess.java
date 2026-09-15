@@ -357,6 +357,41 @@ public class ReservationDataAccess {
 
         return false;
     }
+    public int getNextNumber() throws Exception {
 
+        List<Reservation> reservations =
+                findAll();
+
+        int maxNumber = 0;
+
+        for (Reservation reservation : reservations) {
+
+            String id =
+                    reservation.getId();
+
+            if (id != null &&
+                    id.startsWith("RES-")) {
+
+                try {
+
+                    int number =
+                            Integer.parseInt(
+                                    id.substring(4)
+                            );
+
+                    if (number > maxNumber) {
+
+                        maxNumber = number;
+                    }
+
+                } catch (NumberFormatException e) {
+
+                    // Ignore IDs with an invalid format
+                }
+            }
+        }
+
+        return maxNumber + 1;
+    }
 
 }

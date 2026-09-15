@@ -1,11 +1,12 @@
 package controller;
 
-
+import view.CategoryView;
 import model.entity.User;
 import view.EmployeeView;
 import view.AdminMenuView;
 import view.ChangePasswordView;
 import view.LoginView;
+import view.ResourceView;
 
 public class AdminMenuController {
 
@@ -24,16 +25,22 @@ public class AdminMenuController {
 
     private void initializeEvents() {
 
-        view.setChangePasswordAction(
-                e -> openChangePassword()
-        );
+        view.setChangePasswordAction(e -> openChangePassword());
 
-        view.setLogoutAction(
-                e -> logout()
-        );
-        view.setEmployeesAction(
-                e -> openEmployees()
-        );
+
+        view.setLogoutAction(e -> logout());
+
+
+        view.setEmployeesAction(e -> openEmployees());
+
+
+        view.setCategoriesAction(e -> openCategories());
+
+
+        view.setResourcesAction(e -> openResources());
+
+
+
     }
 
     private void openChangePassword() {
@@ -74,5 +81,35 @@ public class AdminMenuController {
                 employeeView,user);
 
         employeeView.setVisible(true);
+    }
+    private void openCategories() {
+
+        view.dispose();
+
+        CategoryView categoryView =
+                new CategoryView();
+
+        new CategoryController(
+                categoryView,
+                user
+        );
+
+        categoryView.setVisible(true);
+    }
+
+
+    private void openResources() {
+
+        view.dispose();
+
+        ResourceView resourceView =
+                new ResourceView();
+
+        new ResourceController(
+                resourceView,
+                user
+        );
+
+        resourceView.setVisible(true);
     }
 }

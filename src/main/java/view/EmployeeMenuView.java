@@ -139,4 +139,13 @@ public class EmployeeMenuView extends JFrame{
 
         btnLogout.addActionListener(action);
     }
+
+    public void setReservationsAction(
+            ActionListener action) {
+
+        btnReservations.addActionListener(
+                action
+        );
+    }
+
 }
