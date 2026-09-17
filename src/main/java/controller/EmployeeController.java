@@ -10,7 +10,7 @@ import model.logic.EmployeeLogic;
 import view.EmployeeFormView;
 import model.entity.User;
 import view.AdminMenuView;
-
+import report.EmployeeReport;
 
 public class EmployeeController {
 
@@ -19,7 +19,7 @@ public class EmployeeController {
     private final EmployeeDataAccess employeeDataAccess;
     private final UserDataAccess userDataAccess;
     private final EmployeeLogic employeeLogic;
-
+    private final EmployeeReport employeeReport;
 
 
     public EmployeeController(
@@ -27,6 +27,7 @@ public class EmployeeController {
 
         this.view = view;
         this.user = user;
+
 
         this.employeeDataAccess =
                 new EmployeeDataAccess();
@@ -37,6 +38,8 @@ public class EmployeeController {
         this.employeeLogic =
                 new EmployeeLogic();
 
+        this.employeeReport =
+                new EmployeeReport();
 
         initializeEvents();
 
@@ -67,6 +70,10 @@ public class EmployeeController {
                 e -> back()
         );
 
+
+        view.setGeneratePdfAction(
+                e -> generatePdf()
+        );
     }
 
 
@@ -153,7 +160,25 @@ public class EmployeeController {
     }
 
 
+    private void generatePdf() {
 
+        try {
+
+            List<Employee> employees =
+                    employeeDataAccess
+                            .findAll();
+
+            employeeReport.generate(
+                    employees
+            );
+
+        } catch (Exception e) {
+
+            view.showError(
+                    e.getMessage()
+            );
+        }
+    }
 
     private void saveNewEmployee(
             EmployeeFormView formView) {

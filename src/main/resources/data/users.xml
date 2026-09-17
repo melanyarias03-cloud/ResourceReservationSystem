@@ -1,66 +1,89 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <users>
-                    
+                        
+    
     
     
     
     
     <user>
-                                        
+                                                
         
         
         
-        <id>208760123</id>
-                                        
+        
+        <id>118670488</id>
+                                                
+        
         
         
         
         <password>caldosas11</password>
-                                        
+                                                
+        
         
         
         
         <role>EMPLOYEE</role>
-                                    
+                                            
+    
     
     
     
     </user>
-                
+                    
+    
     
     
     <users>
-                                
+                                        
+        
         
         
         <user>
-                                                
+                                                            
+            
             
             
             <id>admin</id>
-                                                
+                                                            
+            
             
             
             <password>admin</password>
-                                                
+                                                            
+            
             
             
             <role>ADMIN</role>
-                                            
+                                                        
+        
         
         
         </user>
-                            
+                                    
+    
     
     
     </users>
-            
+                
     
 
 
+    
     <user>
+                
         <id>208760123</id>
+                
         <password>208760123</password>
+                
+        <role>EMPLOYEE</role>
+            
+    </user>
+    
+    <user>
+        <id>120500285</id>
+        <password>120500285</password>
         <role>EMPLOYEE</role>
     </user>
 </users>

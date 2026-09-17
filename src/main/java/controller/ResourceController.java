@@ -9,7 +9,7 @@ import view.AdminMenuView;
 import view.ResourceView;
 import model.logic.ResourceLogic;
 import view.ResourceFormView;
-
+import report.ResourceReport;
 import java.util.List;
 
 public class ResourceController {
@@ -19,6 +19,9 @@ public class ResourceController {
     private final ResourceLogic resourceLogic;
     private final ResourceDataAccess resourceDataAccess;
     private final CategoryDataAccess categoryDataAccess;
+    private final ResourceReport resourceReport;
+
+
 
     public ResourceController(
             ResourceView view,
@@ -36,6 +39,10 @@ public class ResourceController {
         this.resourceLogic =
                 new ResourceLogic();
 
+        this.resourceReport =
+                new ResourceReport();
+
+
         initializeEvents();
 
         loadCategories();
@@ -50,6 +57,10 @@ public class ResourceController {
 
         view.setShowAllAction(
                 e -> loadResources()
+        );
+
+        view.setGeneratePdfAction(
+                e -> generatePdf()
         );
 
         view.setBackAction(e -> back());
@@ -385,6 +396,23 @@ public class ResourceController {
             );
         }
     }
+    private void generatePdf() {
 
+        try {
+
+            List<Resource> resources =
+                    resourceDataAccess.findAll();
+
+            resourceReport.generate(
+                    resources
+            );
+
+        } catch (Exception e) {
+
+            view.showError(
+                    e.getMessage()
+            );
+        }
+    }
 
 }

@@ -15,7 +15,7 @@ public class ReservationView extends JFrame{
 
     private JTable tblReservations;
     private DefaultTableModel tableModel;
-
+    private JButton btnGeneratePdf;
     private JButton btnNew;
     private JButton btnCancelReservation;
     private JButton btnBack;
@@ -126,6 +126,18 @@ public class ReservationView extends JFrame{
                 35
         );
 
+        btnGeneratePdf =
+                new JButton("Generate PDF");
+
+        btnGeneratePdf.setBounds(
+                500,
+                420,
+                140,
+                35
+        );
+
+
+        mainPanel.add(btnGeneratePdf);
         mainPanel.add(lblTitle);
         mainPanel.add(btnNew);
 
@@ -275,6 +287,12 @@ public class ReservationView extends JFrame{
         return reservation
                 .getDate()
                 .format(formatter);
+    }
+
+    public void setGeneratePdfAction(
+            ActionListener action) {
+
+        btnGeneratePdf.addActionListener(action);
     }
 }
 

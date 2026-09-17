@@ -22,7 +22,13 @@ public class EmployeeMenuView extends JFrame{
 
         initializeComponents();
     }
+    public void setActivityScheduleAction(
+            ActionListener action) {
 
+        btnActivities.addActionListener(
+                action
+        );
+    }
     private void initializeComponents() {
 
         JPanel mainPanel = new JPanel();
@@ -148,4 +154,12 @@ public class EmployeeMenuView extends JFrame{
         );
     }
 
+
+    public void setResourceCalendarAction(
+            ActionListener action) {
+
+        btnCalendar.addActionListener(
+                action
+        );
+    }
 }

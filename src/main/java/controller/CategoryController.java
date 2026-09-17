@@ -8,13 +8,14 @@ import view.CategoryView;
 import java.util.List;
 import model.logic.CategoryLogic;
 import view.CategoryFormView;
+import report.CategoryReport;
 
 public class CategoryController  {
 
     private final CategoryView view;
     private final User user;
     private final CategoryLogic categoryLogic;
-
+    private final CategoryReport categoryReport;
     private final CategoryDataAccess categoryDataAccess;
 
     public CategoryController(
@@ -25,7 +26,7 @@ public class CategoryController  {
         this.user = user;
 
         this.categoryDataAccess =new CategoryDataAccess();
-
+        this.categoryReport = new CategoryReport();
 
         this.categoryLogic=new CategoryLogic();
 
@@ -45,8 +46,32 @@ public class CategoryController  {
 
         view.setDeleteAction(e->deleteCategory());
 
+        view.setGeneratePdfAction(e -> generatePdf());
+
 
     }
+
+    private void generatePdf() {
+
+        try {
+
+            List<Category> categories =
+                    categoryDataAccess
+                            .findAll();
+
+            categoryReport.generate(
+                    categories
+            );
+
+        } catch (Exception e) {
+
+            view.showError(
+                    e.getMessage()
+            );
+        }
+    }
+
+
 
     private void loadCategories() {
 

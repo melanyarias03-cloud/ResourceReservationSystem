@@ -23,6 +23,8 @@ public class ResourceView extends JFrame{
     private JButton btnEdit;
     private JButton btnDelete;
     private JButton btnBack;
+    private JButton btnGeneratePdf;
+
 
     public ResourceView() {
 
@@ -180,7 +182,18 @@ public class ResourceView extends JFrame{
                 110,
                 35
         );
+        btnGeneratePdf =
+                new JButton("Generate PDF");
 
+        btnGeneratePdf.setBounds(
+                20,
+                20,
+                140,
+                35
+        );
+
+
+        mainPanel.add(btnGeneratePdf);
         mainPanel.add(lblTitle);
 
         mainPanel.add(lblCategory);
@@ -357,6 +370,11 @@ public class ResourceView extends JFrame{
         );
     }
 
+    public void setGeneratePdfAction(
+            ActionListener action) {
+
+        btnGeneratePdf.addActionListener(action);
+    }
 
 
 }

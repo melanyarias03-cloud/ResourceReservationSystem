@@ -22,6 +22,9 @@ public class CategoryView extends JFrame{
     private JButton btnEdit;
     private JButton btnDelete;
     private JButton btnBack;
+    private JButton btnGeneratePdf;
+
+
 
     public CategoryView() {
 
@@ -83,12 +86,27 @@ public class CategoryView extends JFrame{
         btnSearch =
                 new JButton("Search");
 
+
+
         btnSearch.setBounds(
                 420,
                 80,
                 100,
                 30
         );
+
+
+        btnGeneratePdf =
+                new JButton("Generate PDF");
+
+        btnGeneratePdf.setBounds(
+                20,
+                20,
+                140,
+                35
+        );
+
+        mainPanel.add(btnGeneratePdf);
 
         btnNew =
                 new JButton("New");
@@ -295,6 +313,14 @@ public class CategoryView extends JFrame{
             ActionListener action) {
 
         btnBack.addActionListener(
+                action
+        );
+    }
+
+    public void setGeneratePdfAction(
+            ActionListener action) {
+
+        btnGeneratePdf.addActionListener(
                 action
         );
     }

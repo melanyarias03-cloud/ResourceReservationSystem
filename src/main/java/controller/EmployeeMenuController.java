@@ -5,6 +5,8 @@ import view.ReservationView;
 import view.ChangePasswordView;
 import view.EmployeeMenuView;
 import view.LoginView;
+import view.ResourceCalendarView;
+import view.ActivityScheduleView;
 
 public class EmployeeMenuController {
 
@@ -12,6 +14,7 @@ public class EmployeeMenuController {
 
     private final EmployeeMenuView view;
     private final User user;
+
 
     public EmployeeMenuController(
             EmployeeMenuView view,
@@ -36,6 +39,14 @@ public class EmployeeMenuController {
         view.setReservationsAction(
                 e -> openReservations()
         );
+
+        view.setResourceCalendarAction(
+                e -> openResourceCalendar()
+        );
+        view.setActivityScheduleAction(
+                e -> openActivitySchedule()
+        );
+
     }
 
     private void openChangePassword() {
@@ -79,4 +90,35 @@ public class EmployeeMenuController {
 
         reservationView.setVisible(true);
     }
+
+    private void openResourceCalendar() {
+
+        view.dispose();
+
+        ResourceCalendarView calendarView =
+                new ResourceCalendarView();
+
+        new ResourceCalendarController(
+                calendarView,
+                user
+        );
+
+        calendarView.setVisible(true);
+    }
+
+    private void openActivitySchedule() {
+
+        view.dispose();
+
+        ActivityScheduleView activityScheduleView =
+                new ActivityScheduleView();
+
+        new ActivityScheduleController(
+                activityScheduleView,
+                user
+        );
+
+        activityScheduleView.setVisible(true);
+    }
+
 }

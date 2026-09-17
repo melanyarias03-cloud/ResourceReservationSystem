@@ -188,4 +188,19 @@ public class AdminMenuView extends JFrame{
                 action
         );
     }
+    public void setResourceCalendarAction(
+            ActionListener action) {
+
+        btnCalendar.addActionListener(
+                action
+        );
+    }
+
+    public void setStatisticsAction(
+            ActionListener action) {
+
+        btnStatistics.addActionListener(action);
+    }
+
+
 }

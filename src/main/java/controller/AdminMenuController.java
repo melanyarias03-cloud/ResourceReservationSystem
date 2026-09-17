@@ -7,6 +7,8 @@ import view.AdminMenuView;
 import view.ChangePasswordView;
 import view.LoginView;
 import view.ResourceView;
+import view.ResourceCalendarView;
+import view.StatisticsView;
 
 public class AdminMenuController {
 
@@ -39,6 +41,11 @@ public class AdminMenuController {
 
         view.setResourcesAction(e -> openResources());
 
+
+        view.setResourceCalendarAction(e -> openResourceCalendar());
+
+
+        view.setStatisticsAction(e -> openStatistics());
 
 
     }
@@ -111,5 +118,34 @@ public class AdminMenuController {
         );
 
         resourceView.setVisible(true);
+    }
+    private void openResourceCalendar() {
+
+        view.dispose();
+
+        ResourceCalendarView calendarView =
+                new ResourceCalendarView();
+
+        new ResourceCalendarController(
+                calendarView,
+                user
+        );
+
+        calendarView.setVisible(true);
+    }
+
+    private void openStatistics() {
+
+        view.dispose();
+
+        StatisticsView statisticsView =
+                new StatisticsView();
+
+        new StatisticsController(
+                statisticsView,
+                user
+        );
+
+        statisticsView.setVisible(true);
     }
 }

@@ -14,12 +14,13 @@ public class EmployeeView extends JFrame{
 
     private JTable tblEmployees;
     private DefaultTableModel tableModel;
-
     private JButton btnSearch;
     private JButton btnNew;
     private JButton btnEdit;
     private JButton btnDelete;
     private JButton btnBack;
+    private JButton btnGeneratePdf;
+
 
     public EmployeeView() {
 
@@ -87,6 +88,20 @@ public class EmployeeView extends JFrame{
                 100,
                 30
         );
+
+
+        btnGeneratePdf =
+                new JButton("Generate PDF");
+
+        btnGeneratePdf.setBounds(
+                20,
+                20,
+                140,
+                35
+        );
+
+
+
 
         btnNew =
                 new JButton("New");
@@ -173,7 +188,7 @@ public class EmployeeView extends JFrame{
         mainPanel.add(btnEdit);
         mainPanel.add(btnDelete);
         mainPanel.add(btnBack);
-
+        mainPanel.add(btnGeneratePdf);
         add(mainPanel);
     }
 
@@ -300,6 +315,12 @@ public class EmployeeView extends JFrame{
 
         btnBack
                 .addActionListener(action);
+    }
+
+    public void setGeneratePdfAction(
+            ActionListener action) {
+
+        btnGeneratePdf.addActionListener(action);
     }
 
 }

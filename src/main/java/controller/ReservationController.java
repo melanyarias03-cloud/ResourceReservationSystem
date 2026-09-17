@@ -16,6 +16,7 @@ import model.entity.Employee;
 import model.entity.Resource;
 import model.logic.ReservationLogic;
 import view.ReservationFormView;
+import report.ReservationReport;
 
 public class ReservationController {
 
@@ -26,6 +27,9 @@ public class ReservationController {
     private final ResourceDataAccess resourceDataAccess;
     private final ReservationLogic reservationLogic;
     private final ReservationDataAccess reservationDataAccess;
+    private final ReservationReport reservationReport;
+
+
 
     public ReservationController(
             ReservationView view,
@@ -49,6 +53,9 @@ public class ReservationController {
         this.reservationLogic =
                 new ReservationLogic();
 
+        this.reservationReport =
+                new ReservationReport();
+
         initializeEvents();
         loadReservations();
     }
@@ -63,6 +70,9 @@ public class ReservationController {
         );
         view.setCancelReservationAction(
                 e -> cancelReservation()
+        );
+        view.setGeneratePdfAction(
+                e -> generatePdf()
         );
 
     }
@@ -268,5 +278,27 @@ public class ReservationController {
             );
         }
     }
+    private void generatePdf() {
+
+        try {
+
+            List<Reservation> reservations =
+                    reservationDataAccess
+                            .findByEmployee(
+                                    user.getId()
+                            );
+
+            reservationReport.generate(
+                    reservations
+            );
+
+        } catch (Exception e) {
+
+            view.showError(
+                    e.getMessage()
+            );
+        }
+    }
+
 
 }
